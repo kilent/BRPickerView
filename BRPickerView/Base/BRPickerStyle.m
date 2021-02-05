@@ -57,6 +57,13 @@
     return _paddingBottom;
 }
 
+- (CGFloat)marginBottom {
+    if (_marginBottom < 0) {
+        _marginBottom = 0;
+    }
+    return _marginBottom;
+}
+
 - (UIColor *)titleBarColor {
     if (!_titleBarColor) {
         if (@available(iOS 13.0, *)) {
@@ -192,7 +199,7 @@
 
 - (CGRect)doneBtnFrame {
     if (CGRectEqualToRect(_doneBtnFrame, CGRectZero) || _doneBtnFrame.size.height == 0) {
-        _doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 60 - 5, 8, 60, 28);
+        _doneBtnFrame = CGRectMake(BRGetKeyWindow().bounds.size.width - 2*self.marginLeftRight - 60 - 5, 8, 60, 28);
     }
     return _doneBtnFrame;
 }

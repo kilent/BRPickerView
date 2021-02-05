@@ -127,8 +127,16 @@
         if (self.pickerFooterView) {
             accessoryViewHeight += self.pickerFooterView.bounds.size.height;
         }
-        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + self.pickerStyle.paddingBottom + accessoryViewHeight;
-        _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, self.keyView.bounds.size.height - height, self.keyView.bounds.size.width, height)];
+        CGFloat height = self.pickerStyle.titleBarHeight + self.pickerStyle.pickerHeight + accessoryViewHeight;
+        CGRect alertFrame;
+        if (self.pickerStyle.marginBottom > 0) {
+            CGFloat btmMargin = self.pickerStyle.paddingBottom + self.pickerStyle.marginBottom;
+            alertFrame = CGRectMake(self.pickerStyle.marginLeftRight, self.keyView.bounds.size.height - height - btmMargin, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, height);
+        } else {
+            height += self.pickerStyle.paddingBottom;
+            alertFrame = CGRectMake(self.pickerStyle.marginLeftRight, self.keyView.bounds.size.height - height, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, height);
+        }
+        _alertView = [[UIView alloc] initWithFrame:alertFrame];
         _alertView.backgroundColor = self.pickerStyle.alertViewColor ? self.pickerStyle.alertViewColor : self.pickerStyle.pickerColor;
         if (!self.pickerStyle.topCornerRadius && !self.pickerStyle.hiddenShadowLine) {
             // 设置弹框视图顶部边框线
@@ -145,7 +153,7 @@
 #pragma mark - 标题栏视图
 - (UIView *)titleBarView {
     if (!_titleBarView) {
-        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.keyView.bounds.size.width, self.pickerStyle.titleBarHeight)];
+        _titleBarView =[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, self.pickerStyle.titleBarHeight)];
         _titleBarView.backgroundColor = self.pickerStyle.titleBarColor;
         _titleBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         if (!self.pickerStyle.hiddenTitleLine) {
@@ -292,8 +300,8 @@
             [self.alertView addSubview:self.pickerHeaderView];
         }
         if (self.pickerFooterView) {
-            CGRect rect = self.pickerFooterView.frame;
-            self.pickerFooterView.frame = CGRectMake(0, self.alertView.bounds.size.height - self.pickerStyle.paddingBottom - rect.size.height, self.alertView.bounds.size.width, rect.size.height);
+            CGFloat footerH = self.pickerFooterView.frame.size.height;
+            self.pickerFooterView.frame = CGRectMake(0, self.alertView.bounds.size.height - (self.pickerStyle.marginBottom ? 0 : self.pickerStyle.paddingBottom) - footerH, self.alertView.bounds.size.width, footerH);
             self.pickerFooterView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             [self.alertView addSubview:self.pickerFooterView];
         }
@@ -314,6 +322,9 @@
             CGFloat alertViewHeight = self.alertView.bounds.size.height;
             CGRect rect = self.alertView.frame;
             rect.origin.y -= alertViewHeight;
+            if (self.pickerStyle.marginBottom > 0) {
+                rect.origin.y -= self.pickerStyle.marginBottom + self.pickerStyle.paddingBottom;
+            }
             self.alertView.frame = rect;
         }];
     }

@@ -55,6 +55,10 @@ typedef NS_ENUM(NSInteger, BRBorderStyle) {
 /** 设置 alertView 弹框视图底部内边距，默认为安全区域底部距屏幕底部的高度  */
 @property (nonatomic, assign) CGFloat paddingBottom;
 
+/// 左右边距
+@property (nonatomic, assign) CGFloat marginLeftRight;
+/// 下方边距, 设置此属性后paddingBottom不再增加alertView高度
+@property (nonatomic, assign) CGFloat marginBottom;
 
 //////////////////////////// 标题栏视图（titleBarView） ////////////////////////////
 

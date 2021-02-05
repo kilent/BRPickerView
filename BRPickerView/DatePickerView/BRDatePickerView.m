@@ -565,7 +565,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (UIDatePicker *)datePicker {
     if (!_datePicker) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
-        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight)];
+        _datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, self.pickerStyle.pickerHeight)];
         _datePicker.backgroundColor = self.pickerStyle.pickerColor;
         _datePicker.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         // 滚动改变值的响应事件
@@ -578,7 +578,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
 - (UIPickerView *)pickerView {
     if (!_pickerView) {
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
-        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight)];
+        _pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, self.pickerStyle.pickerHeight)];
         _pickerView.backgroundColor = self.pickerStyle.pickerColor;
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         _pickerView.dataSource = self;
@@ -1274,7 +1274,7 @@ typedef NS_ENUM(NSInteger, BRDatePickerStyle) {
         
         // 重新设置 datePicker 的宽高（在iOS14里，需要先 datePickerMode，再设置 frame，否则 frame 不会生效）
         CGFloat pickerHeaderViewHeight = self.pickerHeaderView ? self.pickerHeaderView.bounds.size.height : 0;
-        self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width, self.pickerStyle.pickerHeight);
+        self.datePicker.frame = CGRectMake(0, self.pickerStyle.titleBarHeight + pickerHeaderViewHeight, self.keyView.bounds.size.width - 2*self.pickerStyle.marginLeftRight, self.pickerStyle.pickerHeight);
         
         // 3.滚动到选择的日期
         [self.datePicker setDate:self.mSelectDate animated:NO];
